@@ -17,7 +17,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsEmail({}, { message: callbackResponse(1000) })
+  @IsEmail({}, { message: callbackResponse('emailInvalid') })
   public email: string;
 
   @IsNumber()

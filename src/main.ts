@@ -3,9 +3,12 @@ import { AppModule } from './modules/app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { setupApiDocs } from './common/api-docs';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
+import { HttpExceptionFilter } from './core/http/http-exception';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
   const PORT = configService.get<number>('port') || 3000;
 
@@ -17,6 +20,9 @@ async function bootstrap(): Promise<void> {
   );
 
   setupApiDocs(app);
+
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   await app.listen(PORT).then(() => {
     console.log(`Server is running on port ${PORT}`);

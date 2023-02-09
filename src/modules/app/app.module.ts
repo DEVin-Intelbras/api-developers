@@ -7,12 +7,17 @@ import { StateModule } from '../states/state.module';
 import { CountryModule } from '../countries/country.module';
 import { AppController } from './app.controller';
 import { databaseProviders } from 'src/core/database/database.providers';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', '..', 'public'),
     }),
     UserModule,
     CityModule,

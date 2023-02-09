@@ -1,9 +1,10 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Get, Param } from '@nestjs/common';
 import { StateService } from '../states/services/state.service';
 import { CityService } from './services/city.service';
 import axios from 'axios';
 import { City } from './interfaces';
 import { ApiTags } from '@nestjs/swagger';
+import { CityEntity } from './entities/city.entity';
 
 @ApiTags('cities')
 @Controller('city')
@@ -12,6 +13,11 @@ export class CityController {
     private cityService: CityService,
     private stateService: StateService,
   ) {}
+
+  @Get(':id')
+  async getById(@Param('id') id: number): Promise<CityEntity> {
+    return await this.cityService.findById(id);
+  }
 
   @Post('create')
   async createAllStates(): Promise<string> {

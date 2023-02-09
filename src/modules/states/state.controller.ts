@@ -32,7 +32,7 @@ export class StateController {
 
         this.stateService.createState(newState);
       });
-      return 'país salvo com sucesso';
+      return 'Estados salvos com sucesso';
     } catch (error) {
       console.log(error);
     }

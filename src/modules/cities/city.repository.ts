@@ -8,6 +8,9 @@ export class CityRepository extends Repository<CityEntity> {
   constructor(@Inject('DATA_SOURCE') dataSource: DataSource) {
     super(CityEntity, dataSource.createEntityManager());
   }
+  async getById(id: number): Promise<CityEntity> {
+    return this.findOne({ where: { id } });
+  }
 
   async getByAll(): Promise<CityEntity[]> {
     return this.find();
