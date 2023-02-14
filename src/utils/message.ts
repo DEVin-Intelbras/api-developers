@@ -2,8 +2,10 @@ const messages = {
   emailInvalid: 'E-mail com formato inválido',
   userNotFound: 'Usuário não encontrado',
   cityNotFound: 'Cidade não encontrada',
+  countryNotFound: 'País não encontrado',
 };
-interface responseHttpProps {
+
+export interface responseHttpProps {
   statusCode: number;
   message?: string;
   path?: string;
@@ -24,9 +26,9 @@ function responseHttp({
   return {
     statusCode,
     message,
+    timestamp: new Date().toISOString(),
     path,
     records,
-    timestamp: new Date().toISOString(),
   };
 }
 

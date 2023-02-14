@@ -15,12 +15,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = context.getRequest<Request>();
     const response = context.getResponse<Response>();
     const status = exception.getStatus();
-    const message = exception.message;
+    const code = exception.message;
 
     response.status(status).json(
       responseHttp({
         statusCode: status,
-        message: callbackResponse(message),
+        message: callbackResponse(code),
         path: request.url,
       }),
     );

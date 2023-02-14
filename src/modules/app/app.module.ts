@@ -6,9 +6,10 @@ import { CityModule } from '../cities/city.module';
 import { StateModule } from '../states/state.module';
 import { CountryModule } from '../countries/country.module';
 import { AppController } from './app.controller';
-import { databaseProviders } from 'src/core/database/database.providers';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { dataSourceOptions } from 'src/core/database/data-source';
 
 @Module({
   imports: [
@@ -19,12 +20,12 @@ import { join } from 'path';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'public'),
     }),
+    TypeOrmModule.forRoot({ autoLoadEntities: true, ...dataSourceOptions }),
     UserModule,
     CityModule,
     StateModule,
     CountryModule,
   ],
   controllers: [AppController],
-  providers: [...databaseProviders],
 })
 export class AppModule {}

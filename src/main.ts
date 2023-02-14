@@ -5,7 +5,8 @@ import { ConfigService } from '@nestjs/config';
 import { setupApiDocs } from './common/api-docs';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import { HttpExceptionFilter } from './core/http/http-exception';
+import { HttpExceptionFilter } from './core/http/http-exception.filter';
+import { TransformerInterceptor } from './core/http/http-response';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -22,6 +23,7 @@ async function bootstrap(): Promise<void> {
   setupApiDocs(app);
 
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new TransformerInterceptor());
   app.useStaticAssets(join(__dirname, '..', 'public'));
 
   await app.listen(PORT).then(() => {

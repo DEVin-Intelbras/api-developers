@@ -1,11 +1,12 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository, DataSource } from 'typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UserRepository extends Repository<UserEntity> {
-  constructor(@Inject('DATA_SOURCE') dataSource: DataSource) {
+  constructor(@InjectDataSource() dataSource: DataSource) {
     super(UserEntity, dataSource.createEntityManager());
   }
   async getById(id: number): Promise<UserEntity> {

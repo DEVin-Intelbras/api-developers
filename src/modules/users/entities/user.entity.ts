@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, BeforeInsert, ManyToOne } from 'typeorm';
-import { BaseEntity } from 'src/core/entities/base.entity';
-import { CityEntity } from 'src/modules/cities/entities/city.entity';
+import { BaseEntity } from '../../../core/entities/base.entity';
+import { CityEntity } from '../../cities/entities/city.entity';
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'users' })

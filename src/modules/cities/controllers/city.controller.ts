@@ -1,10 +1,10 @@
 import { Controller, Post, Get, Param } from '@nestjs/common';
-import { StateService } from '../states/services/state.service';
-import { CityService } from './services/city.service';
+import { StateService } from '../../states/services/state.service';
+import { CityService } from '../services/city.service';
 import axios from 'axios';
-import { City } from './interfaces';
+import { City } from '../interfaces';
 import { ApiTags } from '@nestjs/swagger';
-import { CityEntity } from './entities/city.entity';
+import { CityEntity } from '../entities/city.entity';
 
 @ApiTags('cities')
 @Controller('city')

@@ -1,11 +1,12 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository, DataSource } from 'typeorm';
 import { CreateCityDto } from './dto/create-city.dto';
 import { CityEntity } from './entities/city.entity';
+import { InjectDataSource } from '@nestjs/typeorm';
 
 @Injectable()
 export class CityRepository extends Repository<CityEntity> {
-  constructor(@Inject('DATA_SOURCE') dataSource: DataSource) {
+  constructor(@InjectDataSource() dataSource: DataSource) {
     super(CityEntity, dataSource.createEntityManager());
   }
   async getById(id: number): Promise<CityEntity> {

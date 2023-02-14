@@ -4,23 +4,28 @@ import {
   IsNumber,
   IsString,
 } from '@nestjs/class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 import { callbackResponse } from 'src/utils/message';
 
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ name: 'name', example: 'Pedro' })
   public name: string;
 
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({ name: 'password', example: '12345678' })
   public password: string;
 
   @IsString()
   @IsNotEmpty()
-  @IsEmail({}, { message: callbackResponse('emailInvalid') })
+  @IsEmail({}, { message: callbackResponse('1000') })
+  @ApiProperty({ name: 'email', example: 'pedro@gmail.com' })
   public email: string;
 
   @IsNumber()
   @IsNotEmpty()
+  @ApiProperty({ name: 'city_id', example: 1 })
   public city_id: number;
 }

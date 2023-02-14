@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from 'src/core/entities/base.entity';
-import { StateEntity } from 'src/modules/states/entities/state.entity';
+import { BaseEntity } from '../../../core/entities/base.entity';
+import { StateEntity } from '../../states/entities/state.entity';
 
 @Entity({ name: 'cities' })
 export class CityEntity extends BaseEntity {

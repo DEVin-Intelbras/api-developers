@@ -1,8 +1,8 @@
 import { Controller, Post, Param } from '@nestjs/common';
-import { StateService } from './services/state.service';
+import { StateService } from '../services/state.service';
 import axios from 'axios';
-import { stateIGBE } from './interface';
-import { CountryService } from '../countries/services/country.service';
+import { stateIGBE } from '../interface';
+import { CountryService } from '../../countries/services/country.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('states')
