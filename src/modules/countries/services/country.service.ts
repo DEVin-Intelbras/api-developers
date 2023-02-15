@@ -22,6 +22,13 @@ export class CountryService {
   }
 
   async createCountry(newCountry: CreateCountryDto): Promise<CountryEntity> {
+    const existCountry = await this.countryRepository.getByName(
+      newCountry.name,
+    );
+
+    if (existCountry) {
+      throw new BadRequestException('entityWithArgumentsExists');
+    }
     const saveCountry = await this.countryRepository.createCountry(newCountry);
 
     if (!saveCountry) {

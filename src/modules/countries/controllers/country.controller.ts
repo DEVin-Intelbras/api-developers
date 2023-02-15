@@ -6,6 +6,8 @@ import {
   Get,
   Patch,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateCountryDto } from '../dto/create-country.dto';
 import { CountryService } from '../services/country.service';
@@ -35,13 +37,11 @@ export class CountryController {
   })
   @Post('create')
   @ApiResponses({ 201: CreateCountryDto })
-  async createCountry(@Body() newCountry: CreateCountryDto): Promise<string> {
-    try {
-      this.countryService.createCountry(newCountry);
-      return 'País salvo com sucesso';
-    } catch (error) {
-      console.log(error);
-    }
+  @UsePipes(new ValidationPipe())
+  async createCountry(
+    @Body() newCountry: CreateCountryDto,
+  ): Promise<CountryEntity> {
+    return this.countryService.createCountry(newCountry);
   }
 
   @ApiOperation({

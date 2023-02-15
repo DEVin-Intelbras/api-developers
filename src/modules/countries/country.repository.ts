@@ -13,6 +13,10 @@ export class CountryRepository extends Repository<CountryEntity> {
     return this.findOne({ where: { id } });
   }
 
+  async getByName(name: string): Promise<CountryEntity> {
+    return this.findOne({ where: { name } });
+  }
+
   async createCountry(newCountry: CreateCountryDto): Promise<CountryEntity> {
     const country = new CountryEntity();
     const dataCountry = {

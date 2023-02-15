@@ -19,8 +19,8 @@ export class CityController {
     return await this.cityService.findById(id);
   }
 
-  @Post('create')
-  async createAllStates(): Promise<string> {
+  @Post('createAllCities')
+  async createAllCities(): Promise<string> {
     try {
       const { data } = await axios.get(
         'https://servicodados.ibge.gov.br/api/v1/localidades/municipios',

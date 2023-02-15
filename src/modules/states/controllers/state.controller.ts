@@ -13,7 +13,7 @@ export class StateController {
     private countryService: CountryService,
   ) {}
 
-  @Post('create/:country_id')
+  @Post('createAllStates/:country_id')
   async createAllStates(
     @Param('country_id') country_id: number,
   ): Promise<string> {
