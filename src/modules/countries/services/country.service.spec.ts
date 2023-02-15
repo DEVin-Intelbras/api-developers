@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TestStatic } from 'src/utils/test';
 import { CountryRepository } from '../country.repository';
+import { CreateCountryDto } from '../dto/create-country.dto';
 import { CountryService } from './country.service';
 
 describe('countryService', () => {
@@ -53,6 +54,7 @@ describe('countryService', () => {
       mockRepository.getById.mockReturnValue(country);
       const foundCountry = await countryService.findById(country.id);
       expect(foundCountry).toMatchObject({ id: country.id });
+      expect(mockRepository.getById).toHaveBeenCalledTimes(1);
     });
 
     it('deveria retornar uma excessão devido ao valor enviado', async () => {
@@ -61,6 +63,25 @@ describe('countryService', () => {
       expect(countryService.findById(pathId)).rejects.toBeInstanceOf(
         NotFoundException,
       );
+      expect(mockRepository.getById).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('createCountry', () => {
+    it('deveria criar um país corretamente', async () => {
+      const country = TestStatic.countryData();
+      const countryDto = TestStatic.countryDto();
+
+      mockRepository.getByName.mockReturnValue(null);
+      mockRepository.createCountry.mockReturnValue(country);
+      const saveCountry = await countryService.createCountry(countryDto);
+
+      expect(saveCountry).toMatchObject({
+        name: country.name,
+        language: country.language,
+      });
+      expect(mockRepository.getByName).toHaveBeenCalledTimes(1);
+      expect(mockRepository.createCountry).toHaveBeenCalledTimes(1);
     });
   });
 });

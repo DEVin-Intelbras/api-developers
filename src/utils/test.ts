@@ -1,3 +1,4 @@
+import { CreateCountryDto } from 'src/core/dtos';
 import { CountryEntity } from 'src/core/entities';
 
 export class TestStatic {
@@ -11,5 +12,13 @@ export class TestStatic {
     country.deletedAt = null;
 
     return country;
+  }
+
+  static countryDto(): CreateCountryDto {
+    const countryBodyDto = new CreateCountryDto();
+    countryBodyDto.language = 'Português';
+    countryBodyDto.name = 'Brasil';
+
+    return countryBodyDto;
   }
 }
