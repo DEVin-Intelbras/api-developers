@@ -98,5 +98,19 @@ describe('countryService', () => {
       });
       expect(mockRepository.getByName).toHaveBeenCalledTimes(1);
     });
+
+    it('deveria retornar uma exceção, pois houve uma falha ao salvar o país', async () => {
+      const countryDto = TestStatic.countryDto();
+
+      mockRepository.getByName.mockReturnValue(null);
+      mockRepository.createCountry.mockReturnValue(null);
+
+      await countryService.createCountry(countryDto).catch((error: Error) => {
+        expect(error).toMatchObject({
+          message: 'countryNotSave',
+        });
+        expect(error).toBeInstanceOf(BadRequestException);
+      });
+    });
   });
 });
