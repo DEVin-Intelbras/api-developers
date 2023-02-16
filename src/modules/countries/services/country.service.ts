@@ -48,16 +48,16 @@ export class CountryService {
       throw new NotFoundException('countryNotFound');
     }
 
-    const countryUpdate = await this.countryRepository.updateCountry({
-      ...foundCountry,
-      ...fieldsCountryUpdate,
-    });
+    try {
+      const countryUpdate = await this.countryRepository.updateCountry({
+        ...foundCountry,
+        ...fieldsCountryUpdate,
+      });
 
-    if (!countryUpdate) {
+      return countryUpdate;
+    } catch (error) {
       throw new BadRequestException('countryNotUpdate');
     }
-
-    return countryUpdate;
   }
 
   async deleteCountry(id: number): Promise<string> {

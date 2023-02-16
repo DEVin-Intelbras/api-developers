@@ -8,6 +8,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import { CreateCountryDto } from '../dto/create-country.dto';
 import { CountryService } from '../services/country.service';
@@ -15,6 +16,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CountryEntity } from '../entities/country.entity';
 import { ApiResponses } from '../../../utils/decorators';
 import { UpdateCountryDto } from '../dto/update-country.dto';
+import { isNumber } from '@nestjs/class-validator';
 
 @ApiTags('countries')
 @Controller('country')
@@ -26,7 +28,11 @@ export class CountryController {
       'Este endpoint recebe como param o id e retorna os dados do país.',
   })
   @Get(':id')
+  @UsePipes(new ValidationPipe())
   async getById(@Param('id') id: number): Promise<CountryEntity> {
+    if (!isNumber(id)) {
+      throw new BadRequestException('FieldMustBeNumber');
+    }
     return await this.countryService.findById(id);
   }
 

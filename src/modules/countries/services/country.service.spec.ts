@@ -2,7 +2,6 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TestStatic } from 'src/utils/test';
 import { CountryRepository } from '../country.repository';
-import { CreateCountryDto } from '../dto/create-country.dto';
 import { CountryService } from './country.service';
 
 describe('countryService', () => {

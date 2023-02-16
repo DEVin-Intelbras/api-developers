@@ -3,8 +3,10 @@ const messages = {
   userNotFound: 'Usuário não encontrado',
   cityNotFound: 'Cidade não encontrada',
   countryNotFound: 'País não encontrado',
-  FieldIsString: 'O valor enviado não é uma string',
+  FieldMustBeString: 'O valor enviado não é uma string',
+  FieldMustBeNumber: 'O valor enviado não é um number',
   entityWithArgumentsExists: 'Já existe uma entidade com os atributos enviados',
+  countryNotUpdate: 'Não foi possível atualizar o país',
 };
 
 export interface responseHttpProps {
