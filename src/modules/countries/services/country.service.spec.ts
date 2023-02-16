@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TestStatic } from 'src/utils/test';
 import { CountryRepository } from '../country.repository';
@@ -74,6 +74,7 @@ describe('countryService', () => {
 
       mockRepository.getByName.mockReturnValue(null);
       mockRepository.createCountry.mockReturnValue(country);
+
       const saveCountry = await countryService.createCountry(countryDto);
 
       expect(saveCountry).toMatchObject({
@@ -82,6 +83,20 @@ describe('countryService', () => {
       });
       expect(mockRepository.getByName).toHaveBeenCalledTimes(1);
       expect(mockRepository.createCountry).toHaveBeenCalledTimes(1);
+    });
+
+    it('deveria retornar uma exceção, pois o país já existe', async () => {
+      const country = TestStatic.countryData();
+      const countryDto = TestStatic.countryDto();
+
+      mockRepository.getByName.mockReturnValue(country);
+      await countryService.createCountry(countryDto).catch((error: Error) => {
+        expect(error).toMatchObject({
+          message: 'entityWithArgumentsExists',
+        });
+        expect(error).toBeInstanceOf(BadRequestException);
+      });
+      expect(mockRepository.getByName).toHaveBeenCalledTimes(1);
     });
   });
 });
