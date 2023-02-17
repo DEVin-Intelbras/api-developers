@@ -14,12 +14,18 @@ export class StateRepository extends Repository<StateEntity> {
     return this.find();
   }
 
-  async createState(newState: CreateStateDto): Promise<void> {
-    const state = new StateEntity();
-    state.country_id = newState.country_id;
-    state.name = newState.name;
-    state.initials = newState.initials;
+  async getByName(name: string): Promise<StateEntity> {
+    return this.findOne({ where: { name } });
+  }
 
-    await this.save(state);
+  async createState(newState: CreateStateDto): Promise<StateEntity> {
+    const state = new StateEntity();
+    const dataState = {
+      ...state,
+      ...newState,
+    };
+
+    const saveState = await this.save(dataState);
+    return saveState;
   }
 }

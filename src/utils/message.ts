@@ -7,6 +7,7 @@ const messages = {
   FieldMustBeNumber: 'O valor enviado não é um number',
   entityWithArgumentsExists: 'Já existe uma entidade com os atributos enviados',
   countryNotUpdate: 'Não foi possível atualizar o país',
+  FieldMustNotBeEmpty: 'O campo enviado não pode ser vazio',
 };
 
 export interface responseHttpProps {
@@ -18,6 +19,7 @@ export interface responseHttpProps {
 }
 
 function callbackResponse(code: string): string {
+  console.log(code);
   return messages[code] || 'Erro não identificado, contatar o suporte';
 }
 

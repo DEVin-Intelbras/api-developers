@@ -9,6 +9,7 @@ import {
   UsePipes,
   ValidationPipe,
   BadRequestException,
+  Query,
 } from '@nestjs/common';
 import { CreateCountryDto } from '../dto/create-country.dto';
 import { CountryService } from '../services/country.service';
@@ -17,6 +18,7 @@ import { CountryEntity } from '../entities/country.entity';
 import { ApiResponses } from '../../../utils/decorators';
 import { UpdateCountryDto } from '../dto/update-country.dto';
 import { isNumber } from '@nestjs/class-validator';
+import { ILike } from 'typeorm';
 
 @ApiTags('countries')
 @Controller('country')
@@ -27,7 +29,7 @@ export class CountryController {
     description:
       'Este endpoint recebe como param o id e retorna os dados do país.',
   })
-  @Get(':id')
+  @Get('getById/:id')
   @UsePipes(new ValidationPipe())
   async getById(@Param('id') id: number): Promise<CountryEntity> {
     if (!isNumber(id)) {
@@ -74,5 +76,10 @@ export class CountryController {
   @Delete(':id')
   async deleteById(@Param('id') id: number): Promise<string> {
     return await this.countryService.deleteCountry(id);
+  }
+
+  @Get('getByFilter')
+  async getByFilter(@Query() query): Promise<CountryEntity[]> {
+    return await this.countryService.getByFilter(query);
   }
 }

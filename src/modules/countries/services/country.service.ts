@@ -3,6 +3,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
+import { ILike } from 'typeorm';
 import { CountryRepository } from '../country.repository';
 import { CreateCountryDto } from '../dto/create-country.dto';
 import { UpdateCountryDto } from '../dto/update-country.dto';
@@ -76,5 +77,31 @@ export class CountryService {
     }
 
     return 'País deletado com sucesso';
+  }
+
+  async getByFilter(query): Promise<CountryEntity[]> {
+    const listOfKeys = Object.keys(query);
+    const createdAt = [];
+    const queryArrayObjects = listOfKeys.map((key) => {
+      if (key !== 'createdAt') {
+        return { [key]: ILike(`%${query[key]}%`) };
+      }
+      createdAt.push({ order: { [key]: query[key] } });
+    });
+
+    const onlyKeysExist = queryArrayObjects.filter((key) => key);
+
+    const queryForSearch = Object.assign(
+      {
+        where: onlyKeysExist,
+      },
+      createdAt.length !== 0 && { ...createdAt[0] },
+    );
+
+    const findCountry = await this.countryRepository.getByFilter(
+      queryForSearch,
+    );
+
+    return findCountry;
   }
 }
