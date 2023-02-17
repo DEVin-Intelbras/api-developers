@@ -56,7 +56,7 @@ export class CountryController {
       'Este endpoint recebe como body o name e language e o path como id para atualizar um registro de dados.',
   })
   @Patch('update/:id')
-  async createUpdate(
+  async updateCountry(
     @Param('id') id: number,
     @Body() updateCountryDto: UpdateCountryDto,
   ): Promise<CountryEntity> {
@@ -72,7 +72,7 @@ export class CountryController {
     description: 'Este endpoint recebe como param o id e excluí o registro',
   })
   @Delete(':id')
-  async deleteById(@Param('id') id: number): Promise<CountryEntity> {
-    return await this.countryService.findById(id);
+  async deleteById(@Param('id') id: number): Promise<string> {
+    return await this.countryService.deleteCountry(id);
   }
 }
