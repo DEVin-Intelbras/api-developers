@@ -3,7 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { CreateCountryDto } from './dto/create-country.dto';
 import { CountryEntity } from './entities/country.entity';
 import { InjectDataSource } from '@nestjs/typeorm';
-import { ILike } from 'typeorm';
+
 @Injectable()
 export class CountryRepository extends Repository<CountryEntity> {
   constructor(@InjectDataSource() dataSource: DataSource) {
@@ -41,6 +41,6 @@ export class CountryRepository extends Repository<CountryEntity> {
   }
 
   async getByFilter(query): Promise<CountryEntity[]> {
-    return this.find({ ...query });
+    return this.find(query);
   }
 }

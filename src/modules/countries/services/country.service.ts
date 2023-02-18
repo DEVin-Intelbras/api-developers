@@ -84,6 +84,9 @@ export class CountryService {
     const createdAt = [];
     const queryArrayObjects = listOfKeys.map((key) => {
       if (key !== 'createdAt') {
+        if (key === 'id') {
+          return { [key]: query[key] };
+        }
         return { [key]: ILike(`%${query[key]}%`) };
       }
       createdAt.push({ order: { [key]: query[key] } });

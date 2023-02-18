@@ -18,7 +18,7 @@ import { CountryEntity } from '../entities/country.entity';
 import { ApiResponses } from '../../../utils/decorators';
 import { UpdateCountryDto } from '../dto/update-country.dto';
 import { isNumber } from '@nestjs/class-validator';
-import { ILike } from 'typeorm';
+import { FilterCountryDto } from '../dto/filter-country.dto';
 
 @ApiTags('countries')
 @Controller('country')
@@ -79,7 +79,10 @@ export class CountryController {
   }
 
   @Get('getByFilter')
-  async getByFilter(@Query() query): Promise<CountryEntity[]> {
+  @UsePipes(new ValidationPipe())
+  async getByFilter(
+    @Query() query: FilterCountryDto,
+  ): Promise<CountryEntity[]> {
     return await this.countryService.getByFilter(query);
   }
 }

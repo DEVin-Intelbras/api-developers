@@ -21,4 +21,20 @@ export class TestStatic {
 
     return countryBodyDto;
   }
+
+  static countriesData(): CountryEntity[] {
+    const countries = ['Brasil', 'Canada', 'China'].map((name, index) => {
+      const country = new CountryEntity();
+      country.id = index + 1;
+      country.language = 'Português';
+      country.name = name;
+      country.createdAt = new Date(`2023-02-1${index + 1} 12:06:12.090`);
+      country.updatedAt = new Date(`2023-02-1${index + 1} 12:06:12.090`);
+      country.deletedAt = null;
+
+      return country;
+    });
+
+    return countries;
+  }
 }

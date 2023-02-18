@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TestStatic } from 'src/utils/test';
+import { FilterCountryDto } from '../dto/filter-country.dto';
 import { CountryService } from '../services/country.service';
 import { CountryController } from './country.controller';
 
@@ -12,6 +13,7 @@ describe('CountryController', () => {
     createCountry: jest.fn(),
     updateCountry: jest.fn(),
     deleteCountry: jest.fn(),
+    getByFilter: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -28,6 +30,7 @@ describe('CountryController', () => {
     mockService.deleteCountry.mockReset();
     mockService.findById.mockReset();
     mockService.updateCountry.mockReset();
+    mockService.getByFilter.mockReset();
   });
 
   it('deveria estar definido', () => {
@@ -50,6 +53,22 @@ describe('CountryController', () => {
           message: 'FieldMustBeNumber',
         });
         expect(error).toBeInstanceOf(BadRequestException);
+      });
+    });
+  });
+
+  describe('getByFilter', () => {
+    it('deveria retornar o valor do país de acordo com o filtro name', async () => {
+      const query: FilterCountryDto = { name: 'na' };
+      const countries = TestStatic.countriesData();
+      const filterCountries = countries.filter(({ name }) =>
+        name.includes(query.name),
+      );
+
+      mockService.getByFilter.mockReturnValue(filterCountries);
+      const foundCountries = await countryController.getByFilter(query);
+      foundCountries.forEach((country) => {
+        expect(country.name).toContain(query.name);
       });
     });
   });

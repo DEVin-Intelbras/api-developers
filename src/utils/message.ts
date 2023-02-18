@@ -19,7 +19,6 @@ export interface responseHttpProps {
 }
 
 function callbackResponse(code: string): string {
-  console.log(code);
   return messages[code] || 'Erro não identificado, contatar o suporte';
 }
 
