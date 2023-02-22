@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, BeforeInsert, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../../core/entities/base.entity';
 import { CityEntity } from '../../cities/entities/city.entity';
 import * as bcrypt from 'bcrypt';
@@ -25,13 +25,6 @@ export class UserEntity extends BaseEntity {
     name: 'city_id',
   })
   city: CityEntity;
-
-  @BeforeInsert()
-  async hashPassword(): Promise<void> {
-    const salt = await bcrypt.genSalt(12);
-    const hashedPassword = await bcrypt.hash(this.password, salt);
-    this.password = hashedPassword;
-  }
 
   @Column({ nullable: false })
   password: string;

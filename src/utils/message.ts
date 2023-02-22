@@ -8,6 +8,7 @@ const messages = {
   entityWithArgumentsExists: 'Já existe uma entidade com os atributos enviados',
   countryNotUpdate: 'Não foi possível atualizar o país',
   FieldMustNotBeEmpty: 'O campo enviado não pode ser vazio',
+  technologyNotFound: 'Tecnologia não encontrada',
 };
 
 export interface responseHttpProps {

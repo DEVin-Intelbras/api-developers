@@ -10,6 +10,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from 'src/core/database/data-source';
+import { RecruiterModule } from '../recruiters/recruiter.module';
+import { DeveloperModule } from '../developers/developer.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { dataSourceOptions } from 'src/core/database/data-source';
     CityModule,
     StateModule,
     CountryModule,
+    RecruiterModule,
+    DeveloperModule,
   ],
   controllers: [AppController],
 })

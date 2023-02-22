@@ -72,4 +72,18 @@ describe('CountryController', () => {
       });
     });
   });
+
+  describe('createCountry', () => {
+    it('deveria criar um registro de país com sucesso', async () => {
+      const countryDto = TestStatic.countryDto();
+      const country = TestStatic.countryData();
+
+      mockService.createCountry.mockReturnValue(country);
+      const saveCountry = await countryController.createCountry(countryDto);
+      expect(saveCountry).toMatchObject({
+        language: countryDto.language,
+        name: countryDto.name,
+      });
+    });
+  });
 });

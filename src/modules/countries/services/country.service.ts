@@ -6,6 +6,7 @@ import {
 import { ILike } from 'typeorm';
 import { CountryRepository } from '../country.repository';
 import { CreateCountryDto } from '../dto/create-country.dto';
+import { FilterCountryDto } from '../dto/filter-country.dto';
 import { UpdateCountryDto } from '../dto/update-country.dto';
 import { CountryEntity } from '../entities/country.entity';
 
@@ -79,7 +80,7 @@ export class CountryService {
     return 'País deletado com sucesso';
   }
 
-  async getByFilter(query): Promise<CountryEntity[]> {
+  async getByFilter(query: FilterCountryDto): Promise<CountryEntity[]> {
     const listOfKeys = Object.keys(query);
     const createdAt = [];
     const queryArrayObjects = listOfKeys.map((key) => {

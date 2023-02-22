@@ -10,7 +10,7 @@
 2) Utilizar o comando `npm install` para instalar as dependências;
 3) Utilizar o `.env_example` como base para o `.env` e colocar as suas configurações;
 4) Utilizar o comando `npm run migration:run` para criar as tabelas após a configuração das variáveis de ambiente no passo 3
-5) Utilizar o comando `npm run start:dev`para executar a aplicação no ambiente de desenvolvimento.
+5) Utilizar o comando `npm run start:dev` para executar a aplicação no ambiente de desenvolvimento.
 
 #
 ## Aplicação

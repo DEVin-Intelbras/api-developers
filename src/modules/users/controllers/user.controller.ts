@@ -1,31 +1,34 @@
-import { Controller, Get, Post, Param, Body, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  ValidationPipe,
+  UsePipes,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../services/user.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-
+import { userDocumentation } from '../documentation';
+const { ApiOperation: doc } = userDocumentation;
 @ApiTags('users')
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-  @ApiOperation({
-    summary: 'user/:id',
-    description:
-      'Este endpoint recebe como param o id do usuário e retorna os dados',
-  })
+
+  @ApiOperation(doc.getById)
   @Get(':id')
-  @HttpCode(200)
+  @UsePipes(new ValidationPipe())
   async getById(@Param('id') id: number): Promise<UserEntity> {
     return await this.userService.findById(id);
   }
 
+  @ApiOperation(doc.createUser)
   @Post('create')
-  async createUser(@Body() newUser: CreateUserDto): Promise<string> {
-    try {
-      this.userService.createUser(newUser);
-      return 'usuário salvo com sucesso';
-    } catch (error) {
-      console.log(error);
-    }
+  @UsePipes(new ValidationPipe())
+  async createUser(@Body() newUser: CreateUserDto): Promise<UserEntity> {
+    return this.userService.createUser(newUser);
   }
 }

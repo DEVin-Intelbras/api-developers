@@ -19,15 +19,6 @@ export class StateService {
     await this.stateRepository.createState(newState);
   }
 
-  // async getById(id: number): Promise<StateEntity> {
-  //   const foundCountry = await this.countryRepository.getById(id);
-  //   if (!foundCountry) {
-  //     throw new NotFoundException('countryNotFound');
-  //   }
-
-  //   return foundCountry;
-  // }
-
   async createNewState(newState: CreateStateDto): Promise<StateEntity> {
     try {
       await this.countryService.findById(newState.country_id);
@@ -47,44 +38,4 @@ export class StateService {
 
     return saveState;
   }
-
-  // async updateCountry(
-  //   id: number,
-  //   fieldsCountryUpdate: UpdateCountryDto,
-  // ): Promise<StateEntity> {
-  //   const foundCountry = await this.countryRepository.getById(id);
-
-  //   if (!foundCountry) {
-  //     throw new NotFoundException('countryNotFound');
-  //   }
-
-  //   try {
-  //     const countryUpdate = await this.countryRepository.updateCountry({
-  //       ...foundCountry,
-  //       ...fieldsCountryUpdate,
-  //     });
-
-  //     return countryUpdate;
-  //   } catch (error) {
-  //     throw new BadRequestException('countryNotUpdate');
-  //   }
-  // }
-
-  // async deleteCountry(id: number): Promise<string> {
-  //   const foundCountry = await this.countryRepository.getById(id);
-
-  //   if (!foundCountry) {
-  //     throw new NotFoundException('countryNotFound');
-  //   }
-
-  //   const countryDelete = await this.countryRepository.deleteCountry(
-  //     foundCountry,
-  //   );
-
-  //   if (!countryDelete) {
-  //     throw new NotFoundException('CountryNotDelete');
-  //   }
-
-  //   return 'País deletado com sucesso';
-  // }
 }

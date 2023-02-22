@@ -112,4 +112,31 @@ describe('countryService', () => {
       });
     });
   });
+
+  describe('updateCountry', () => {
+    it('deveria atualizar o país com sucesso', async () => {
+      const country = TestStatic.countryData();
+      const updatedCountry = {
+        language: 'Inglês',
+      };
+
+      mockRepository.getById.mockReturnValue(country);
+      mockRepository.updateCountry.mockReturnValue({
+        ...country,
+        ...updatedCountry,
+      });
+
+      const updateCountry = await countryService.updateCountry(
+        country.id,
+        updatedCountry,
+      );
+
+      expect(updateCountry).toMatchObject({
+        language: updatedCountry.language,
+      });
+
+      expect(mockRepository.getById).toHaveBeenCalledTimes(1);
+      expect(mockRepository.updateCountry).toHaveBeenCalledTimes(1);
+    });
+  });
 });
