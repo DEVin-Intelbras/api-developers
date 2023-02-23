@@ -11,7 +11,7 @@ export class StateRepository extends Repository<StateEntity> {
   }
 
   async getByAll(): Promise<StateEntity[]> {
-    return this.find();
+    return this.find({ relations: ['country'] });
   }
 
   async getByName(name: string): Promise<StateEntity> {

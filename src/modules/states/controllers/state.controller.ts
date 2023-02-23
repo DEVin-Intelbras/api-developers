@@ -34,7 +34,7 @@ export class StateController {
   ): Promise<string> {
     try {
       const { data } = await axios.get(
-        'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+        'http://servicodados.ibge.gov.br/api/v1/localidades/estados',
       );
       const country = await this.countryService.findById(country_id);
 
@@ -53,19 +53,16 @@ export class StateController {
     }
   }
 
-  // @ApiOperation({
-  //   summary: 'state/:id',
-  //   description:
-  //     'Este endpoint recebe como param o id e retorna os dados do estado.',
-  // })
-  // @Get(':id')
-  // @UsePipes(new ValidationPipe())
-  // async getById(@Param('id') id: number): Promise<StateEntity> {
-  //   if (!isNumber(id)) {
-  //     throw new BadRequestException('FieldMustBeNumber');
-  //   }
-  //   return await this.stateService.getById(id);
-  // }
+  @ApiOperation({
+    summary: 'state/:id',
+    description:
+      'Este endpoint recebe como param o id e retorna os dados do estado.',
+  })
+  @Get(':id')
+  @UsePipes(new ValidationPipe())
+  async getById(@Param('id') id: number): Promise<StateEntity[]> {
+    return await this.stateService.getByAll();
+  }
 
   @ApiOperation({
     summary: 'state/create',
@@ -89,7 +86,7 @@ export class StateController {
   //   @Param('id') id: number,
   //   @Body() updateStateDto: UpdateStateDto,
   // ): Promise<StateEntity> {
-  //   if (!isNumber(id)) {
+  //   if (!isNumber(+id)) {
   //     throw new BadRequestException('FieldMustBeNumber');
   //   }
 
@@ -107,7 +104,7 @@ export class StateController {
   // @Delete(':id')
   // @UsePipes(new ValidationPipe())
   // async deleteById(@Param('id') id: number): Promise<string> {
-  //   if (!isNumber(id)) {
+  //   if (!isNumber(+id)) {
   //     throw new BadRequestException('FieldMustBeNumber');
   //   }
 
