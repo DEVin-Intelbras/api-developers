@@ -7,15 +7,22 @@ import { TechnologyService } from './services/technology.service';
 import { TechnologyRepository } from './repositories/technology.repository';
 import { DeveloperService } from './services/developer.service';
 import { DeveloperRepository } from './repositories/developer.repository';
+import { UserService } from '../users/services/user.service';
+import { UserEntity } from '../users/entities/user.entity';
+import { UserRepository } from '../users/user.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TechnologyEntity, DeveloperEntity])],
+  imports: [
+    TypeOrmModule.forFeature([TechnologyEntity, DeveloperEntity, UserEntity]),
+  ],
   controllers: [DeveloperController],
   providers: [
     TechnologyService,
     TechnologyRepository,
+    UserRepository,
     DeveloperService,
     DeveloperRepository,
+    UserService,
   ],
 })
 export class DeveloperModule {}
